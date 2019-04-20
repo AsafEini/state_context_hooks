@@ -1,44 +1,18 @@
-import React, { useReducer } from 'react';
+import React, {useReducer} from 'react';
 import MainStateContext from './app-state';
 
 
-const reducer = (state, action) => {
-    switch (action.type) {
-        case 'addItem':
-            return {
-                ...state,
-                items: [...state.items, action.item]
-            };
-        case 'removeItem':
-            return {
-                ...state,
-                items: state.items.filter((item) => item.id !== action.id)
-            };
-        default:
-            return state;
-    }
-};
-
-const AppStateComponent = ({children}) => {
+const AppStateComponent = ({children, reducer}) => {
 
     const [state, dispatch] = useReducer(reducer, {
-        items: [{name:'asaf', id: 1}, {name:'moshe', id: 2}],
-        addItem: (item) => {
-            return dispatch({
-                type: 'addItem',
-                item
-            })
-        },
-        removeItem: (item) => {
-            return dispatch({
-                type: 'removeItem',
-                id: item.id
-            })
-        }
+        items: [
+            {name: 'asaf', id: 1},
+            {name: 'moshe', id: 2}
+        ]
     });
 
     return (
-        <MainStateContext.Provider value = {state}>
+        <MainStateContext.Provider value={{state, dispatch}}>
             {children}
         </MainStateContext.Provider>
     )

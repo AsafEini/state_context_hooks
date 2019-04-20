@@ -1,18 +1,29 @@
 import React, {useContext} from 'react';
 import MainStateContext from '../app-state/app-state';
 
-const ListComponent = (props) => {
+const ListComponent = () => {
     const appContext = useContext(MainStateContext);
-    const {items, addItem, removeItem} = appContext;
+    const {state:{ items }, dispatch} = appContext;
+
     const addNewItem = () => {
         let newItem;
 
         if (!items.length) {
-            newItem = {id: 1, name:`kakaroto ${1}`};
+            newItem = {id: 1, name:`i want it ? i got it!! => ${1}`};
         } else {
-            newItem = {id: items[items.length - 1].id + 1, name:`kakaroto ${items[items.length - 1].id + 1}`};
+            newItem = {id: items[items.length - 1].id + 1, name:`gee thnx!! just bought it! ==> ${items[items.length - 1].id + 1}`};
         }
-        addItem(newItem)
+        dispatch({
+            type: 'addItem',
+            item: newItem
+        })
+    };
+
+    const removeItem = (item) => {
+        dispatch({
+            type: 'removeItem',
+            id: item.id
+        })
     };
     return (
         <div>
